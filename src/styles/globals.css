@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap");
+
+@theme {
+  /* --- Benefit LLP brand tokens --- */
+  --color-cream: #fbf6ea;
+  --color-sand: #f2ead6;
+  --color-brand-blue: #1b4f91;
+  --color-brand-blue-dark: #123a6e;
+  --color-brand-green: #2e7d4f;
+  --color-brand-green-dark: #235f3c;
+  --color-marigold: #f2a900;
+  --color-ink: #22281f;
+  --color-ink-soft: #4b4438;
+
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-marigold);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
