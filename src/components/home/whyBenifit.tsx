@@ -1,36 +1,52 @@
 import { useState, useEffect, useRef } from "react";
+import saltImg from "../../assets/products/salt.png";
+import teaImg from "../../assets/products/tea.jpg";
+import detergentPowderImg from "../../assets/products/detergent-powder.png";
+import detergentLiquidImg from "../../assets/products/detergent-liquid.jpg";
 
 const REASONS = [
   {
-    label: "Purity & Iodized Salt",
-    description: "Premium quality vacuum-evaporated iodized salt ensuring perfect health and taste.",
-    icon: <path d="M12 3 4 8v8l8 5 8-5V8l-8-5Zm0 2.3 6 3.7-6 3.7-6-3.7 6-3.7ZM6 10.1l5 3.1v5.9l-5-3.1v-5.9Zm7 9v-5.9l5-3.1v5.9l-5 3.1Z" />,
+    label: "Iodized Food Salt",
+    description: "1kg pack of 100% iodized, refined salt — pure, hygienic and perfect for everyday cooking.",
+    img: saltImg,
   },
   {
-    label: "Antioxidant-Rich Tea",
-    description: "Handpicked premium tea leaves bursting with natural antioxidants for an energetic morning.",
-    icon: <path d="M4 3h13a1 1 0 0 1 1 1v3h1.5A2.5 2.5 0 0 1 22 9.5v2A3.5 3.5 0 0 1 18.5 15H18c-.6 2.9-3.3 5-6.4 5H10C6.7 20 4 17.3 4 14V3Zm2 2v9a4 4 0 0 0 4 4h1.6a4.4 4.4 0 0 0 4.4-4.4V5H6Zm12 3v5h.5A1.5 1.5 0 0 0 20 11.5v-2A.5.5 0 0 0 19.5 9H18Z" />,
+    label: "Antioxidant-Rich Tea Powder",
+    description: "250g Health & Vitality Blend of green tea, moringa, jasmine and botanicals for a daily boost.",
+    img: teaImg,
   },
   {
     label: "Powerful Detergent Powder",
-    description: "Tough on stubborn stains but engineered to protect the texture and colors of clothes.",
-    icon: <path d="M9 2h6v3.2c1.8.7 3.3 2 4.2 3.8H21a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1h1.8c.9-1.8 2.4-3.1 4.2-3.8V2Zm2 2v2h2V4h-2ZM4 11v8h16v-8H4Zm8 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z" />,
+    description: "Tough on stubborn stains, gentle on fabric colour — a lemon-fresh Rs 10 pack for daily wash.",
+    img: detergentPowderImg,
   },
   {
-    label: "Gentle Fresh Liquid Detergent",
-    description: "Deep cleansing formula that leaves your fabrics incredibly soft with a long-lasting fresh aroma.",
-    icon: <path d="M12 2c2.5 3.1 6 7.9 6 11.5A6 6 0 0 1 6 13.5C6 9.9 9.5 5.1 12 2Zm0 3.5c-1.9 2.6-4 5.9-4 8a4 4 0 0 0 8 0c0-2.1-2.1-5.4-4-8Z" />,
-  },
-  {
-    label: "Quick-Wash Formula",
-    description: "Smart active ingredients that dissolve quickly, saving water and time in every single wash.",
-    icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
+    label: "Quick-Wash Detergent Liquid",
+    description: "100ml single-use sachet with quick-wash formula — effortless clean, keeps colours bright.",
+    img: detergentLiquidImg,
   },
 ];
 
+const colors = {
+  ink: "#1B2621",
+  inkSoft: "#4A5750",
+  teal: "#12695A",
+  tealDark: "#0B463C",
+  tealTint: "#E1F0EC",
+  gold: "#C98A2C",
+  line: "rgba(27,38,33,0.12)",
+  cream: "#F6F3EC",
+};
+
 export default function WhyBenefit() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [visibleItems, setVisibleItems] = useState<Record<number, boolean>>({});
+  const containerRef = useRef(null);
+  const [visibleItems, setVisibleItems] = useState({});
+
+  // the highest-index item that's currently visible drives the left-side image
+  const visibleIndexes = Object.keys(visibleItems)
+    .filter((k) => visibleItems[k])
+    .map(Number);
+  const activeIndex = visibleIndexes.length ? Math.max(...visibleIndexes) : 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,9 +54,10 @@ export default function WhyBenefit() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute("data-index"));
+            // each product reveals roughly 1 second after the previous one
             setTimeout(() => {
               setVisibleItems((prev) => ({ ...prev, [index]: true }));
-            }, index * 150);
+            }, index * 1000);
           }
         });
       },
@@ -53,50 +70,83 @@ export default function WhyBenefit() {
   }, []);
 
   return (
-    <section id="why-choose-us" className="bg-white py-16 md:py-24 border-t border-b border-gray-100">
-      <div className="mx-auto max-w-5xl px-5 md:px-8">
-        
-        {/* Responsive Grid: Stacked on mobile, 12-col grid on desktop */}
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 lg:gap-10">
-          
-          {/* LEFT COLUMN: Sticky behavior limited to desktop */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-24">
-              <span className="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-white bg-[#ea580c] px-3 py-1 rounded mb-4 shadow-md">
-                The Benefit Standard
-              </span>
-              <h2 className="font-sans text-3xl md:text-4xl font-black text-[#1e3a8a] leading-tight mb-6">
-                Why Choose <br className="hidden lg:inline" />Benefit?
-              </h2>
+    <section
+      id="why-choose-us"
+      style={{ background: colors.tealTint, padding: "36px 0 28px", borderTop: `1px solid ${colors.line}`, borderBottom: `1px solid ${colors.line}`, fontFamily: "'Inter', sans-serif" }}
+    >
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }} className="why-benefit-grid">
+          <div>
+            <span
+              style={{
+                display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em",
+                textTransform: "uppercase", color: "#fff", background: colors.gold,
+                padding: "4px 12px", borderRadius: 4, marginBottom: 16, boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+              }}
+            >
+              The Benefit Standard
+            </span>
+            <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 32, fontWeight: 700, color: colors.tealDark, lineHeight: 1.15, margin: 0 }}>
+              Why Choose <br />Benefit?
+            </h2>
+            <div style={{ marginTop: 18, borderRadius: 18, overflow: "hidden", border: `1px solid ${colors.line}`, aspectRatio: "4 / 5", maxWidth: 300, position: "relative", background: "#fff" }}>
+              {REASONS.map((reason, i) => (
+                <img
+                  key={reason.label}
+                  src={reason.img}
+                  alt={reason.label}
+                  style={{
+                    position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block",
+                    opacity: i === activeIndex ? 1 : 0,
+                    transition: "opacity 0.6s ease-out",
+                  }}
+                />
+              ))}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Timeline flow */}
-          <div ref={containerRef} className="lg:col-span-7 flex flex-col gap-10 md:gap-12 border-l border-gray-200/60 pl-6 md:pl-8">
+          <div
+            ref={containerRef}
+            style={{ display: "flex", flexDirection: "column", gap: 26, borderLeft: `1px solid ${colors.line}`, paddingLeft: 24 }}
+          >
             {REASONS.map((reason, index) => {
               const isVisible = visibleItems[index];
               return (
-                <div 
-                  key={reason.label} 
+                <div
+                  key={reason.label}
                   data-index={index}
-                  className={`scroll-item group relative flex gap-6 transition-all duration-700 ease-out 
-                    ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                  className="scroll-item"
+                  style={{
+                    position: "relative", display: "flex", gap: 20,
+                    transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? "translateY(0)" : "translateY(24px)",
+                  }}
                 >
-                  <div className={`absolute -left-[33px] top-1.5 h-3 w-3 rounded-full ring-4 ring-white transition-colors duration-300
-                    ${isVisible ? "bg-[#ea580c]" : "bg-gray-200"}`} 
+                  <div
+                    style={{
+                      position: "absolute", left: -34, top: 6, height: 12, width: 12, borderRadius: "50%",
+                      boxShadow: "0 0 0 4px #fff", background: isVisible ? colors.gold : "#D9D9D9",
+                      transition: "background 0.3s",
+                    }}
                   />
-                  
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#e0e7ff] text-[#1e3a8a] group-hover:bg-[#1e3a8a] group-hover:text-white transition-all duration-300 shadow-sm">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                      {reason.icon}
-                    </svg>
+                  <div
+                    style={{
+                      display: "flex", height: 64, width: 64, flexShrink: 0, alignItems: "center", justifyContent: "center",
+                      borderRadius: 16, background: "#fff", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", overflow: "hidden",
+                    }}
+                  >
+                    <img
+                      src={reason.img}
+                      alt={reason.label}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    />
                   </div>
-
-                  <div className="flex flex-col">
-                    <h3 className="font-sans font-bold text-gray-900 text-lg mb-1 group-hover:text-[#1e3a8a] transition-colors">
+                  <div>
+                    <h3 style={{ fontFamily: "'Fraunces', serif", fontWeight: 600, color: colors.ink, fontSize: 17, margin: "0 0 4px" }}>
                       {reason.label}
                     </h3>
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                    <p style={{ color: colors.inkSoft, fontSize: 14, lineHeight: 1.6, margin: 0 }}>
                       {reason.description}
                     </p>
                   </div>
@@ -106,6 +156,14 @@ export default function WhyBenefit() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 900px) {
+          .why-benefit-grid { flex-direction: row !important; align-items: flex-start; }
+          .why-benefit-grid > div:first-child { width: 38%; position: sticky; top: 96px; }
+          .why-benefit-grid > div:last-child { width: 62%; }
+        }
+      `}</style>
     </section>
   );
 }
