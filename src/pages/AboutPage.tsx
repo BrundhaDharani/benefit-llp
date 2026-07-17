@@ -1,7 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
 
-// Benefit LLP-ன் உண்மை விழுமியங்கள் மற்றும் தரக்கட்டுப்பாடுகள்
+import { Link } from "react-router-dom"
 const VALUES = [
   {
     title: "100% Adulteration-Free",
