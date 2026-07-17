@@ -45,3 +45,22 @@ export const products: Product[] = [
     tagline: "Quick wash formula, effortless clean",
   },
 ];
+
+/** 
+ * Helper: Find a product by its slug. 
+ * Useful for dynamic routes like /products/:slug 
+ */
+export const getProductBySlug = (slug: string): Product | undefined => {
+  return products.find((p) => p.slug === slug);
+};
+
+/** 
+ * Helper: Formats price to Indian Rupee format 
+ */
+export const formatCurrency = (price: number): string => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(price);
+};

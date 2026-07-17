@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import ProductRange from "../components/home/ProductRange";
 
-// ─── 1. CORE ASSET BUNDLE IMPORTS ───
-// Import matching exact case-sensitive filename tracking paths from your project
+// ─── ASSET IMPORTS ───
 import saltImg from "../assets/products/salt.png";
 import teaImg from "../assets/products/tea.jpg";
 import detergentPowderImg from "../assets/products/detergent-powder.png";
 import detergentLiquidImg from "../assets/products/detergent-liquid.jpg";
 
+// ─── TYPES & DATA ───
 interface ProductItem {
   id: string;
   name: string;
@@ -16,7 +16,7 @@ interface ProductItem {
   price: string;
   unit: string;
   badge: string;
-  imageSrc: string; // Dynamic bound source identifier
+  imageSrc: string;
 }
 
 const PRODUCTS_DATA: ProductItem[] = [
@@ -73,89 +73,73 @@ export default function ProductsPage() {
     <div className="bg-[#fbf9f4] min-h-screen font-sans">
       
       {/* SECTION 1: HERO BANNER */}
-      <section className="bg-[#0b4f3b] py-16 text-center text-[#fbf9f4] px-5 relative overflow-hidden">
+      <section className="bg-[#0b4f3b] py-12 md:py-20 text-center text-[#fbf9f4] px-5 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]" />
         
         <div className="max-w-3xl mx-auto relative z-10">
-          <span className="inline-block text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#D99214] bg-[#e8efe9]/10 border border-[#e8efe9]/20 px-3.5 py-1.5 rounded-full mb-4 shadow-sm">
+          <span className="inline-block text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#D99214] bg-[#e8efe9]/10 border border-[#e8efe9]/20 px-3.5 py-1.5 rounded-full mb-4">
             Our Catalog
           </span>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
             Our Everyday Essentials
           </h1>
-          <p className="text-gray-200/90 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="text-gray-200/90 text-sm md:text-base max-w-lg mx-auto leading-relaxed px-2">
             Explore our range of high-quality salt, tea, and detergents crafted honestly around real household needs.
           </p>
         </div>
       </section>
 
-      {/* SECTION 2: PRODUCT RANGE ACCORDION TEMPLATE */}
+      {/* SECTION 2: PRODUCT RANGE ACCORDION */}
       <ProductRange />
 
-      {/* SECTION 3: EXPLORE PRODUCTS GRID WITH REAL VISUAL IMAGES */}
-      <section className="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24 border-t border-gray-200/50">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 border-l-4 border-[#0b4f3b] pl-4">
+      {/* SECTION 3: PRODUCT GRID */}
+      <section className="mx-auto max-w-6xl px-4 md:px-8 py-16 md:py-20 border-t border-gray-200/50">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-l-4 border-[#0b4f3b] pl-4">
           <div>
             <span className="block text-xs font-bold tracking-[0.15em] uppercase text-[#D99214] mb-1">
               Direct Sourcing
             </span>
-            <h2 className="text-2xl md:text-3xl font-black text-[#0b4f3b]">
+            <h2 className="text-2xl md:text-4xl font-black text-[#0b4f3b]">
               Explore Our Products
             </h2>
           </div>
-          <p className="text-gray-500 text-xs md:text-sm max-w-xs md:text-right leading-relaxed font-medium">
+          <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
             Every batch goes through strict quality checks before reaching your home.
           </p>
         </div>
 
-        {/* Dynamic Image Cards Rendering Pipeline */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PRODUCTS_DATA.map((prod) => (
             <div 
               key={prod.id} 
-              className="flex flex-col justify-between rounded-2xl border border-gray-200/70 bg-white overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgba(11,79,59,0.06)] hover:border-[#e8efe9] transition-all duration-300 group"
+              className="flex flex-col rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition-all duration-300 group"
             >
-              {/* IMAGE HOUSING LAYER: Replaced original alphabet tags with clean auto-scale image container */}
-              <div className="bg-[#fbf9f4]/60 p-6 flex flex-col items-center justify-center relative border-b border-gray-100 h-[220px] transition-colors group-hover:bg-[#e8efe9]/20">
-                <span className="absolute top-3 left-3 bg-[#0b4f3b] text-[#fbf9f4] text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-sm z-10">
+              <div className="bg-[#fbf9f4]/60 p-6 flex flex-col items-center justify-center relative border-b border-gray-100 h-52">
+                <span className="absolute top-3 left-3 bg-[#0b4f3b] text-[#fbf9f4] text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                   {prod.badge}
                 </span>
-                
-                {/* 📸 Real Image tag bounding pipeline */}
                 <img 
                   src={prod.imageSrc} 
                   alt={prod.name}
-                  className="max-h-[140px] max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 z-0"
+                  className="max-h-[120px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
-                
-                <span className="text-[9px] font-bold text-gray-500 mt-3 uppercase tracking-widest bg-gray-200/60 px-2 py-0.5 rounded-md">
+                <span className="absolute bottom-3 text-[9px] font-bold text-gray-500 uppercase tracking-widest bg-gray-200/60 px-2 py-0.5 rounded-md">
                   {prod.unit}
                 </span>
               </div>
 
-              {/* Card Title Content Description Area */}
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <h3 className="font-bold text-[#0b4f3b] text-base md:text-lg mb-2 tracking-tight">
-                    {prod.name}
-                  </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed font-medium line-clamp-3">
-                    {prod.desc}
-                  </p>
-                </div>
-
-                {/* Footer Controls Row Component */}
-                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Price</span>
-                    <span className="font-black text-xl text-[#0b4f3b] tracking-tight">{prod.price}</span>
-                  </div>
-                  
+              <div className="p-5 flex flex-col flex-grow">
+                <h3 className="font-bold text-[#0b4f3b] text-base mb-2">{prod.name}</h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-4 flex-grow">
+                  {prod.desc}
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <span className="font-black text-lg text-[#0b4f3b]">{prod.price}</span>
                   <Link
                     to="/#contact"
-                    className="focus-ring inline-flex items-center justify-center rounded-xl bg-[#0b4f3b] hover:bg-[#0b4f3b]/90 text-white font-bold text-xs px-4 py-2.5 transition-colors shadow-sm"
+                    className="rounded-xl bg-[#0b4f3b] hover:bg-[#0b4f3b]/90 text-white font-bold text-xs px-5 py-2.5 transition-colors"
                   >
-                    Order Now
+                    Order
                   </Link>
                 </div>
               </div>
@@ -164,33 +148,20 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* SECTION 4: SHOP BY CATEGORY */}
-      <section className="bg-white border-t border-gray-200/50 py-16 md:py-24">
-        <div className="mx-auto max-w-5xl px-5 md:px-8">
-          <div className="text-center mb-12">
-            <span className="inline-block text-xs font-bold tracking-[0.2em] uppercase text-[#D99214] mb-2">
-              Classified View
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black text-[#0b4f3b]">
-              Shop by Category
-            </h2>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-3">
+      {/* SECTION 4: CATEGORY */}
+      <section className="bg-white border-t border-gray-200/50 py-16">
+        <div className="mx-auto max-w-5xl px-5">
+          <h2 className="text-2xl md:text-3xl font-black text-[#0b4f3b] text-center mb-12">
+            Shop by Category
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {CATEGORIES_DATA.map((cat) => (
-              <div 
-                key={cat.name} 
-                className="rounded-2xl border border-gray-100 bg-[#fbf9f4]/40 p-6 shadow-sm hover:border-[#e8efe9] hover:bg-white transition-all duration-300"
-              >
-                <span className="text-[9px] font-bold text-[#D99214] bg-[#fef6e7] px-2 py-0.5 rounded uppercase tracking-widest inline-block mb-3 shadow-sm">
+              <div key={cat.name} className="rounded-2xl border border-gray-100 bg-[#fbf9f4]/40 p-6 hover:bg-white transition-colors">
+                <span className="text-[9px] font-bold text-[#D99214] bg-[#fef6e7] px-2 py-0.5 rounded uppercase tracking-widest mb-3 inline-block">
                   {cat.count}
                 </span>
-                <h3 className="font-bold text-[#0b4f3b] text-lg mb-2 tracking-tight">
-                  {cat.name}
-                </h3>
-                <p className="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
-                  {cat.desc}
-                </p>
+                <h3 className="font-bold text-[#0b4f3b] text-lg mb-2">{cat.name}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{cat.desc}</p>
               </div>
             ))}
           </div>
