@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import saltImg from "../../assets/products/salt.png";
 import teaImg from "../../assets/products/tea.jpg";
 import detergentPowderImg from "../../assets/products/detergent-powder.png";
@@ -9,85 +10,125 @@ const SHELF = [
   { src: detergentPowderImg, alt: "Benefit Detergent Powder pack" },
   { src: detergentLiquidImg, alt: "Benefit Detergent Liquid sachet" },
 ];
+
+const FEATURED_PRODUCTS = [
+  {
+    src: teaImg,
+    tag: "Best Seller",
+    title: "Premium Tea Powder",
+    desc: "Antioxidant-rich organic tea blend with a robust, smooth aroma and zero bitterness.",
+    price: "₹120",
+    weight: "250g"
+  },
+  {
+    src: saltImg,
+    tag: "Everyday Essential",
+    title: "Purity Iodized Food Salt",
+    desc: "Perfectly crystallized, clean, and vacuum-evaporated iodized salt for healthy cooking.",
+    price: "₹50",
+    weight: "1kg"
+  }
+];
+
 const WHATSAPP_NUMBER = "919876543210";
 const WHATSAPP_MESSAGE = encodeURIComponent("Hi! I'd like to place an order with Benefit LLP.");
 
 export default function Hero() {
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimate(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section id="home" className="relative overflow-hidden">
-      {/* warm kitchen-counter backdrop */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(180deg, #F3EAD4 0%, #FBF6EA 62%), radial-gradient(80% 60% at 50% 0%, rgba(46,125,79,0.10), transparent 60%)",
-        }}
-      />
+    <div className="bg-[#f5f2ed] min-h-screen text-[#1a1a1a]">
+      {/* HERO SECTION */}
+      <section id="home" className="relative overflow-hidden min-h-[85vh] flex items-center pt-16 sm:pt-20 md:pt-28 pb-10 sm:pb-12">
+        <div className="mx-auto max-w-6xl px-5 md:px-8 text-center flex flex-col items-center">
+          
+          <div className="relative mx-auto mb-8 sm:mb-10 flex w-full max-w-2xl items-end justify-center h-40 sm:h-56 md:h-72 px-2 sm:px-4">
+            {SHELF.map((item, i) => {
+              const delays = ["delay-[100ms]", "delay-[250ms]", "delay-[400ms]", "delay-[550ms]"];
+              return (
+                <div
+                  key={item.alt}
+                  className={`relative -mx-2 md:-mx-3 flex aspect-[3/4] items-center justify-center overflow-hidden rounded-2xl bg-[#e9e4dc] p-2 sm:p-3 md:p-4 shadow-lg transition-all duration-700 ease-out hover:-translate-y-4 hover:z-30 hover:scale-105 ${delays[i]} ${animate ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-90"}`}
+                  style={{
+                    width: i === 1 || i === 2 ? "26%" : "22%",
+                    zIndex: i === 1 || i === 2 ? 10 : 5,
+                    transform: animate ? `rotate(${(i - 1.5) * 3}deg) translateY(0px)` : `rotate(0deg) translateY(60px)`,
+                  }}
+                >
+                  <img src={item.src} alt={item.alt} className="h-full w-full object-contain" />
+                </div>
+              );
+            })}
+          </div>
 
-      <div className="mx-auto max-w-6xl px-5 md:px-8 pt-14 md:pt-20 pb-16 md:pb-24 text-center">
-        {/* product shelf */}
-        <div className="relative mx-auto mb-12 flex max-w-3xl items-end justify-center">
-          {SHELF.map((item, i) => (
-            <div
-              key={item.alt}
-              className="relative -mx-2 md:-mx-3 flex aspect-[3/4] items-center justify-center overflow-hidden rounded-2xl bg-white p-4 ring-4 ring-cream shadow-[0_18px_30px_rgba(34,40,31,0.22)] transition-transform hover:-translate-y-2 hover:z-20"
-              style={{
-                width: i === 1 || i === 2 ? "27%" : "23%",
-                zIndex: i === 1 || i === 2 ? 10 : 5,
-                transform: `rotate(${(i - 1.5) * 2.5}deg)`,
-              }}
-            >
-              <img src={item.src} alt={item.alt} className="h-full w-full object-contain" />
-            </div>
-          ))}
+          <h1 className="max-w-4xl font-sans text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.2] sm:leading-[1.15]">
+            Enhancing Every Home, <span className="text-[#c2410c]">Every Day</span>
+          </h1>
+          
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg font-medium tracking-wide text-gray-600 uppercase px-2">
+            Pure Salt &bull; Premium Tea &bull; High-Performance Detergents
+          </p>
+
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto px-4 sm:px-0">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 rounded-full bg-[#1a1a1a] hover:bg-black text-white font-semibold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 shadow-md transition-all w-full sm:w-auto">
+              Order on WhatsApp
+            </a>
+          </div>
         </div>
+      </section>
 
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-brand-blue leading-[1.08]">
-          Enhancing Every Home, <span className="text-brand-green">Every Day</span>
-        </h1>
-        <p className="mt-4 font-body text-lg md:text-xl text-ink-soft">
-          Salt · Tea · Detergents
-        </p>
+      {/* FEATURED PRODUCTS SECTION */}
+      <section className="py-12 sm:py-16 px-5 md:px-8 bg-[#f5f2ed]">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center md:text-left mb-8 sm:mb-10">
+            <span className="text-[11px] sm:text-xs uppercase font-bold tracking-widest text-[#c2410c] bg-[#e6e1d9] px-3 py-1.5 rounded-full">
+              Our Premium Picks
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-3">
+              Featured Products
+            </h2>
+          </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="focus-ring inline-flex items-center gap-2 rounded-full bg-brand-green hover:bg-brand-green-dark text-cream font-semibold px-7 py-3.5 shadow-sm transition-colors"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.7-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C11 9.3 10.5 8 10.3 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" />
-              <path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.2L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2Zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.7 15 3.2 13.5 3.2 12c0-4.8 3.9-8.8 8.8-8.8s8.8 3.9 8.8 8.8-3.9 8.8-8.8 8.8Z" />
-            </svg>
-            Order on WhatsApp
-          </a>
-          <a
-            href="tel:+919876543210"
-            className="focus-ring inline-flex items-center gap-2 rounded-full bg-brand-blue hover:bg-brand-blue-dark text-cream font-semibold px-7 py-3.5 shadow-sm transition-colors"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.9c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1.1L6.6 10.8Z" />
-            </svg>
-            Call Now
-          </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {FEATURED_PRODUCTS.map((prod) => (
+              <div key={prod.title} className="flex flex-col sm:flex-row bg-[#e9e4dc] rounded-2xl overflow-hidden shadow-sm border border-[#dcd8cf] transition-transform duration-300 hover:-translate-y-1">
+                <div className="sm:w-2/5 bg-[#dcd8cf] flex items-center justify-center p-5 sm:p-6 border-b sm:border-b-0 sm:border-r border-[#dcd8cf]">
+                  <img src={prod.src} alt={prod.title} className="max-h-36 sm:max-h-48 w-auto object-contain" />
+                </div>
+
+                <div className="sm:w-3/5 p-5 sm:p-6 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold tracking-wider uppercase bg-[#dcd8cf] px-2.5 py-1 rounded">
+                      {prod.tag}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-bold mt-2.5 mb-1.5">{prod.title}</h3>
+                    <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">{prod.desc}</p>
+                  </div>
+
+                  <div className="mt-4 sm:mt-6 pt-4 border-t border-[#dcd8cf] flex items-center justify-between">
+                    <span className="text-lg sm:text-xl font-black">{prod.price}</span>
+                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I want to order ${prod.title} (${prod.weight})`)}`} target="_blank" rel="noopener noreferrer" className="bg-[#1a1a1a] hover:bg-black text-white font-bold text-xs px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl transition-all">
+                      Buy Now
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-
-  
-      <a
-        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-        className="focus-ring fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-brand-green text-cream shadow-lg transition-transform hover:scale-105"
-      >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.7-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C11 9.3 10.5 8 10.3 7.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" />
-          <path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.2L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2Zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3 .8.8-2.9-.2-.3C3.7 15 3.2 13.5 3.2 12c0-4.8 3.9-8.8 8.8-8.8s8.8 3.9 8.8 8.8-3.9 8.8-8.8 8.8Z" />
-        </svg>
+      </section>
+      
+    
+      <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`} target="_blank" rel="noopener noreferrer" className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#1a1a1a] text-white shadow-xl hover:scale-110 transition-transform">
+        <span className="text-xl sm:text-2xl">💬</span>
       </a>
-    </section>
+    </div>
   );
 }

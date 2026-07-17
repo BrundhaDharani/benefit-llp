@@ -1,33 +1,33 @@
+import { Link, useLocation } from "react-router-dom";
+
 const LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", to: "/" },
+  { label: "Products", to: "/products" },
+  { label: "About Us", to: "/about" },
+  { label: "Reviews", to: "/reviews" },
+  { label: "Why Us", to: "/why-benefit" },
+  { label: "Contact", to: "/contact" },
 ];
 
-interface NavbarProps {
-  className?: string;
-  onLinkClick?: () => void;
-}
+export default function Navbar({ className = "", onLinkClick }: any) {
+  const location = useLocation();
 
-export default function Navbar({ className = "", onLinkClick }: NavbarProps) {
   return (
-    <nav className={className} aria-label="Primary">
-      <ul className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
-        {LINKS.map((link, i) => (
-          <li key={link.href}>
-            <a
-              href={link.href}
+    <nav className={className}>
+      <ul className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+        {LINKS.map((link) => (
+          <li key={link.to}>
+            <Link
+              to={link.to}
               onClick={onLinkClick}
-              className={`focus-ring font-body font-medium text-[15px] transition-colors ${
-                i === 0
-                  ? "text-brand-blue border-b-2 border-brand-green pb-0.5"
-                  : "text-ink-soft hover:text-brand-blue"
+              className={`font-medium transition-colors ${
+                location.pathname === link.to
+                  ? "text-white md:text-brand-blue border-b-2 border-brand-green"
+                  : "text-white/80 hover:text-white md:text-ink-soft md:hover:text-brand-blue"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

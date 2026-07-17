@@ -1,58 +1,67 @@
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
-const WHATSAPP_NUMBER = "919876543210";
+const WHATSAPP_NUMBER = "919443212345";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="bg-brand-blue-dark text-cream/90">
-      <div className="mx-auto max-w-6xl px-5 md:px-8 py-14 grid gap-10 md:grid-cols-3">
-        <div>
+    <footer className="bg-[#081c15] text-[#faf9f5]/90 border-t border-white/5 font-sans">
+      <div className="mx-auto max-w-6xl px-5 md:px-8 py-10 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        
+        {/* 1. Company Info */}
+        <div className="space-y-4">
           <Logo variant="light" />
-          <p className="mt-4 text-sm leading-relaxed text-cream/70 max-w-xs">
-            Quality salt, tea and detergents made for everyday Indian homes —
-            sourced, packed and delivered with care.
+          <p className="text-sm leading-relaxed text-gray-400">
+            Leading FMCG company in Jayankondam, providing premium quality iodized salt, CTC tea, and detergent products.
           </p>
         </div>
 
-        <div>
-          <h3 className="font-display font-semibold text-cream mb-4">Quick Links</h3>
-          <ul className="space-y-2.5 text-sm text-cream/70">
-            <li><a className="focus-ring hover:text-marigold" href="#home">Home</a></li>
-            <li><a className="focus-ring hover:text-marigold" href="#about">About Us</a></li>
-            <li><a className="focus-ring hover:text-marigold" href="#products">Products</a></li>
-            <li><a className="focus-ring hover:text-marigold" href="#reviews">Reviews</a></li>
-          </ul>
+        {/* 2. Quick Links */}
+        <div className="flex flex-col md:items-center">
+          <div>
+            <h3 className="font-bold text-base md:text-lg mb-3 md:mb-5 border-b border-white/10 pb-2">Quick Links</h3>
+            <ul className="space-y-2 md:space-y-3 text-sm text-gray-400">
+              <li><Link to="/" className="hover:text-[#d4a373] transition-colors">Home</Link></li>
+              <li><Link to="/products" className="hover:text-[#d4a373] transition-colors">Products</Link></li>
+              <li><Link to="/about" className="hover:text-[#d4a373] transition-colors">About Us</Link></li>
+              <li><a href="/#reviews" className="hover:text-[#d4a373] transition-colors">Reviews</a></li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h3 className="font-display font-semibold text-cream mb-4">Get in Touch</h3>
-          <ul className="space-y-2.5 text-sm text-cream/70">
-            <li>
-              <a className="focus-ring hover:text-marigold" href="tel:+919876543210">+91 98765 43210</a>
-            </li>
-            <li>
-              <a className="focus-ring hover:text-marigold" href="mailto:hello@benefitllp.in">hello@benefitllp.in</a>
-            </li>
-            <li>
-              <a
-                className="focus-ring hover:text-marigold"
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chat on WhatsApp
-              </a>
-            </li>
-          </ul>
+        {/* 3. Get in Touch */}
+        <div className="flex flex-col md:items-end">
+          <div>
+            <h3 className="font-bold text-base md:text-lg mb-3 md:mb-5 border-b border-white/10 pb-2">Get in Touch</h3>
+            <ul className="space-y-2 md:space-y-3 text-sm text-gray-400">
+              <li>+91 94432 12345</li>
+              <li className="break-all">contact@benefitllp.com</li>
+              <li>
+                <a 
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#d4a373] hover:underline"
+                >
+                  Chat on WhatsApp
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-cream/10">
-        <div className="mx-auto max-w-6xl px-5 md:px-8 py-5 text-xs text-cream/50 flex flex-col sm:flex-row items-center justify-between gap-2">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5 py-5 md:py-6">
+        <div className="mx-auto max-w-6xl px-5 md:px-8 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-xs text-gray-500 text-center md:text-left">
           <p>© {year} Benefit LLP. All rights reserved.</p>
-          <p>Enhancing Every Home, Every Day.</p>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-6 font-medium text-[#d4a373]">
+            <span>FSSAI Certified</span>
+            <span className="hidden md:inline">|</span>
+            <span>ISO 9001:2015</span>
+          </div>
         </div>
       </div>
     </footer>
