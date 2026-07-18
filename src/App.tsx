@@ -4,13 +4,14 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import ScrollManager from "./components/common/scrol";
 
-// Lazy loading pages for better performance
+
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ProductsPage = lazy(() => import("./pages/ProductsPage"));
 const ReviewPage = lazy(() => import("./pages/Review"));
 const WhyBenefitPage = lazy(() => import("./pages/WhyBenefitPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const Range=lazy(()=>import("./pages/Range"))
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <ScrollManager />
       <Header />
 
-      {/* min-h-screen ensures footer stays down */}
+    
       <main className="flex-grow">
         <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
           <Routes>
@@ -28,6 +29,7 @@ function App() {
             <Route path="/reviews" element={<ReviewPage />} />
             <Route path="/why-benefit" element={<WhyBenefitPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/Range" element={<Range/>}/>
           </Routes>
         </Suspense>
       </main>

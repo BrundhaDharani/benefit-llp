@@ -1,5 +1,3 @@
-
-
 interface Review {
   quote: string;
   author: string;
@@ -44,7 +42,7 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
           <defs>
             <linearGradient id={gradientId}>
               <stop offset={`${fill * 100}%`} stopColor="#d4a373" />
-              <stop offset={`${fill * 100}%`} stopColor="#E5E7EB" />
+              <stop offset={`${fill * 100}%`} stopColor="#a8bde9" />
             </linearGradient>
           </defs>
           <path fill={`url(#${gradientId})`} d="M10 1.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8L1.6 7.6l5.8-.8L10 1.5Z" />
@@ -55,7 +53,6 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
 );
 
 export default function Reviews() {
-  // Use a stable array for the marquee
   const displayReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   return (
@@ -69,7 +66,8 @@ export default function Reviews() {
         <span className="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a373] bg-[#1b4332]/10 px-3 py-1 rounded-full mb-3">
           Verified Customer Feedback
         </span>
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1b4332]">What Our Community Says</h2>
+        {/* Changed from font-serif to font-sans */}
+        <h2 className="font-sans text-3xl md:text-4xl font-bold text-[#1b4332]">What Our Community Says</h2>
       </div>
 
       <div className="relative w-full">
@@ -84,11 +82,12 @@ export default function Reviews() {
             return (
               <div 
                 key={uniqueId} 
-                className={`flex flex-col justify-between w-[290px] md:w-[350px] border rounded-2xl p-6 shadow-sm shrink-0
+                className={`flex flex-col justify-between w-[290px] md:w-[350px] border rounded-2xl p-6 shadow-sm shrink-0 font-sans
                   ${isDark ? "bg-[#1b4332] border-white/10" : "bg-white border-gray-100"}`}
               >
                 <div>
-                  <span className={`text-6xl font-serif leading-none opacity-20 block ${isDark ? 'text-[#d4a373]' : 'text-[#1b4332]'}`}>“</span>
+                  {/* Changed from font-serif to font-sans */}
+                  <span className={`text-6xl font-sans leading-none opacity-20 block ${isDark ? 'text-[#d4a373]' : 'text-[#1b4332]'}`}>“</span>
                   <p className={`text-sm md:text-base italic leading-relaxed ${isDark ? "text-gray-100" : "text-gray-600"}`}>
                     {review.quote}
                   </p>

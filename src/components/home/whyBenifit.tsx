@@ -3,6 +3,7 @@ import saltImg from "../../assets/products/salt.png";
 import teaImg from "../../assets/products/tea.jpg";
 import detergentPowderImg from "../../assets/products/detergent-powder.png";
 import detergentLiquidImg from "../../assets/products/detergent-liquid.jpg";
+import { Key } from "lucide-react";
 
 const REASONS = [
   {
@@ -28,14 +29,14 @@ const REASONS = [
 ];
 
 const colors = {
-  ink: "#1B2621",
+  ink: "#21230d",
   inkSoft: "#4A5750",
   teal: "#12695A",
   tealDark: "#0B463C",
-  tealTint: "#E1F0EC",
-  gold: "#C98A2C",
+  tealTint: "rgb(178, 239, 173)",
+  gold: "#f8d49e",
   line: "rgba(27,38,33,0.12)",
-  cream: "#F6F3EC",
+  cream: "#fdd77e",
 };
 
 export default function WhyBenefit() {
@@ -44,7 +45,7 @@ export default function WhyBenefit() {
 
   // the highest-index item that's currently visible drives the left-side image
   const visibleIndexes = Object.keys(visibleItems)
-    .filter((k) => visibleItems[k])
+    .filter((k) => visibleItems[Key])
     .map(Number);
   const activeIndex = visibleIndexes.length ? Math.max(...visibleIndexes) : 0;
 
@@ -80,7 +81,7 @@ export default function WhyBenefit() {
             <span
               style={{
                 display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em",
-                textTransform: "uppercase", color: "#fff", background: colors.gold,
+                textTransform: "uppercase", color: "#d04d4d", background : colors.gold,
                 padding: "4px 12px", borderRadius: 4, marginBottom: 16, boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
               }}
             >
