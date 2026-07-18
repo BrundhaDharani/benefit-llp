@@ -7,7 +7,7 @@ import ContactBanner from "../components/home/ContactBanner";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-16 md:gap-24 overflow-x-hidden">
+    <div className="flex flex-col gap-0 md:gap-24 overflow-x-hidden">
       <Hero />
       <ProductRange />
       <WhyBenefit />

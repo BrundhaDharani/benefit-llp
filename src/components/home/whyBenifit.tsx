@@ -3,9 +3,14 @@ import saltImg from "../../assets/products/salt.png";
 import teaImg from "../../assets/products/tea.jpg";
 import detergentPowderImg from "../../assets/products/detergent-powder.png";
 import detergentLiquidImg from "../../assets/products/detergent-liquid.jpg";
-import { Key } from "lucide-react";
 
-const REASONS = [
+interface Reason {
+  label: string;
+  description: string;
+  img: string;
+}
+
+const REASONS: Reason[] = [
   {
     label: "Iodized Food Salt",
     description: "1kg pack of 100% iodized, refined salt — pure, hygienic and perfect for everyday cooking.",
@@ -31,22 +36,20 @@ const REASONS = [
 const colors = {
   ink: "#21230d",
   inkSoft: "#4A5750",
-  teal: "#12695A",
   tealDark: "#0B463C",
   tealTint: "rgb(178, 239, 173)",
   gold: "#f8d49e",
   line: "rgba(27,38,33,0.12)",
-  cream: "#fdd77e",
 };
 
 export default function WhyBenefit() {
-  const containerRef = useRef(null);
-  const [visibleItems, setVisibleItems] = useState({});
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleItems, setVisibleItems] = useState<Record<number, boolean>>({});
 
-  // the highest-index item that's currently visible drives the left-side image
   const visibleIndexes = Object.keys(visibleItems)
-    .filter((k) => visibleItems[Key])
+    .filter((k) => visibleItems[Number(k)])
     .map(Number);
+  
   const activeIndex = visibleIndexes.length ? Math.max(...visibleIndexes) : 0;
 
   useEffect(() => {
@@ -55,7 +58,6 @@ export default function WhyBenefit() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute("data-index"));
-            // each product reveals roughly 1 second after the previous one
             setTimeout(() => {
               setVisibleItems((prev) => ({ ...prev, [index]: true }));
             }, index * 1000);
@@ -81,7 +83,7 @@ export default function WhyBenefit() {
             <span
               style={{
                 display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em",
-                textTransform: "uppercase", color: "#d04d4d", background : colors.gold,
+                textTransform: "uppercase", color: "#d04d4d", background: colors.gold,
                 padding: "4px 12px", borderRadius: 4, marginBottom: 16, boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
               }}
             >
@@ -111,7 +113,7 @@ export default function WhyBenefit() {
             style={{ display: "flex", flexDirection: "column", gap: 26, borderLeft: `1px solid ${colors.line}`, paddingLeft: 24 }}
           >
             {REASONS.map((reason, index) => {
-              const isVisible = visibleItems[index];
+              const isVisible = !!visibleItems[index];
               return (
                 <div
                   key={reason.label}
@@ -157,7 +159,6 @@ export default function WhyBenefit() {
           </div>
         </div>
       </div>
-
       <style>{`
         @media (min-width: 900px) {
           .why-benefit-grid { flex-direction: row !important; align-items: flex-start; }

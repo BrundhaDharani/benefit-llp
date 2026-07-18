@@ -11,7 +11,7 @@ const WHATSAPP_MESSAGE = encodeURIComponent("Hi! I'd like to place an order with
 const teal = "#12695A";
 const tealDark = "#0B463C";
 const gold = "#C98A2C";
-const cream = "#F6F3EC";
+
 
 // Slide 1 = brand intro, Slides 2–5 = one per product
 const SLIDES = [
@@ -184,7 +184,7 @@ export default function Hero() {
                 }}
                 className="hero-slide-img"
               >
-                <img src={slide.img} alt={slide.title} style={{ maxHeight: 320, width: "auto", objectFit: "contain", filter: "drop-shadow(0 20px 30px rgba(0,0,0,0.25))" }} />
+                <img src={slide.img || undefined} alt={slide.title} style={{ maxHeight: 320, width: "auto", objectFit: "contain", filter: "drop-shadow(0 20px 30px rgba(0,0,0,0.25))" }} />
               </div>
             )}
           </div>

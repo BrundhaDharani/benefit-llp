@@ -15,7 +15,7 @@ const WHATSAPP_NUMBER = "919876543210";
 
 export default function ProductRange() {
   return (
-    <section id="products" className="bg-[#fbf9f4] py-12 sm:py-16 md:py-24 border-t border-gray-100">
+    <section id="products" className="bg-[#5DCAA5] pt-10 pb-12 sm:pt-14 sm:pb-16 md:pt-16 md:pb-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         
         {/* Section Header */}
