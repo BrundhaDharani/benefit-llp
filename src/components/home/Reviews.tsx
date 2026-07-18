@@ -42,7 +42,7 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
           <defs>
             <linearGradient id={gradientId}>
               <stop offset={`${fill * 100}%`} stopColor="#d4a373" />
-              <stop offset={`${fill * 100}%`} stopColor="#a8bde9" />
+              <stop offset={`${fill * 100}%`} stopColor="hsl(220, 55%, 82%)" />
             </linearGradient>
           </defs>
           <path fill={`url(#${gradientId})`} d="M10 1.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8L1.6 7.6l5.8-.8L10 1.5Z" />
@@ -56,7 +56,7 @@ export default function Reviews() {
   const displayReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   return (
-    <section id="reviews" className="bg-[#faf9f5] py-20 overflow-hidden border-t border-b border-gray-100 relative">
+    <section id="reviews" className="bg-[lightblue] py-20 overflow-hidden border-t border-b border-gray-100 relative">
       <style>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; animation: marquee 40s linear infinite; }

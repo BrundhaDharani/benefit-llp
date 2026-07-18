@@ -8,7 +8,7 @@ const WHATSAPP_NUMBER = "919876543210";
 const WHATSAPP_MESSAGE = encodeURIComponent("Hi! I'd like to place an order with Benefit LLP.");
 
 // brand tokens
-const teal = "#12695A";
+const teal = "hsl(170, 71%, 24%)";
 const tealDark = "#0B463C";
 const gold = "#C98A2C";
 
