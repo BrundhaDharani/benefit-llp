@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 interface Review {
   quote: string;
   author: string;
@@ -6,31 +8,33 @@ interface Review {
 }
 
 const REVIEWS: Review[] = [
-  { 
-    quote: "Benefit Iodized Salt has the perfect consistency. Food tastes much better, and we are relieved about our family's health.", 
-    author: "Meenakshi S., Jayankondam", 
+  {
+    quote: "Benefit Iodized Salt has the perfect consistency. Food tastes much better, and we are relieved about our family's health.",
+    author: "Meenakshi S., Jayankondam",
     rating: 5,
-    productTag: "Iodized Salt"
+    productTag: "Iodized Salt",
   },
-  { 
-    quote: "The Premium CTC blend is exceptional! Highly aromatic, gives the perfect strong golden color tea every morning.", 
-    author: "Ramanan K., Ariyalur", 
+  {
+    quote: "The Premium CTC blend is exceptional! Highly aromatic, gives the perfect strong golden color tea every morning.",
+    author: "Ramanan K., Ariyalur",
     rating: 5,
-    productTag: "Premium Tea"
+    productTag: "Premium Tea",
   },
-  { 
-    quote: "Very effective active enzyme laundry sachet. Cleaned heavy mud stains off my kids' clothes effortlessly without affecting fabric color.", 
-    author: "Abinaya, Trichy", 
+  {
+    quote: "Very effective active enzyme laundry sachet. Cleaned heavy mud stains off my kids' clothes effortlessly without affecting fabric color.",
+    author: "Abinaya, Trichy",
     rating: 4,
-    productTag: "Eco-Stain Detergent"
+    productTag: "Eco-Stain Detergent",
   },
-  { 
-    quote: "Cleaned tough grease stains easily. The sachet packs are so convenient and very affordable for daily home wash.", 
-    author: "Selvam, Tanjore", 
+  {
+    quote: "Cleaned tough grease stains easily. The sachet packs are so convenient and very affordable for daily home wash.",
+    author: "Selvam, Tanjore",
     rating: 4.5,
-    productTag: "Detergent Liquid"
+    productTag: "Detergent Liquid",
   },
 ];
+
+const WHATSAPP_NUMBER = "919876543210";
 
 const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
   <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -41,7 +45,7 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
         <svg key={i} width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
           <defs>
             <linearGradient id={gradientId}>
-              <stop offset={`${fill * 100}%`} stopColor="#d4a373" />
+              <stop offset={`${fill * 100}%`} stopColor="rgb(244, 241, 54)" />
               <stop offset={`${fill * 100}%`} stopColor="hsl(220, 55%, 82%)" />
             </linearGradient>
           </defs>
@@ -54,40 +58,120 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
 
 export default function Reviews() {
   const displayReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const pauseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // continuous auto-scroll via requestAnimationFrame
+  useEffect(() => {
+    let frameId: number;
+    const speed = 0.8; // px per frame, tweak for faster/slower auto-scroll
+
+    const tick = () => {
+      const track = trackRef.current;
+      if (track && !paused) {
+        const half = track.scrollWidth / 3; // one third since list is tripled
+        track.scrollLeft += speed;
+        // loop back seamlessly once we've scrolled past the first copy
+        if (track.scrollLeft >= half * 2) {
+          track.scrollLeft -= half;
+        }
+      }
+      frameId = requestAnimationFrame(tick);
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [paused]);
+
+  // pause auto-scroll briefly after manual interaction, then resume
+  const pauseThenResume = () => {
+    setPaused(true);
+    if (pauseTimeout.current) clearTimeout(pauseTimeout.current);
+    pauseTimeout.current = setTimeout(() => setPaused(false), 2500);
+  };
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLDivElement>(".review-card");
+    const step = card ? card.offsetWidth + 24 : 320;
+    track.scrollBy({ left: direction * step, behavior: "smooth" });
+    pauseThenResume();
+  };
 
   return (
-    <section id="reviews" className="bg-[lightblue] py-20 overflow-hidden border-t border-b border-gray-100 relative">
+    <section id="reviews" className="reviews-bg-cycle py-20 overflow-hidden border-t border-b border-gray-100 relative">
       <style>{`
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { display: flex; animation: marquee 40s linear infinite; }
+        @keyframes bgCycle {
+          0%   { background-color: rgb(210, 241, 99); }  /* soft green */
+          33%  { background-color: hsl(240, 63%, 60%); }  /* soft blue */
+          66%  { background-color: rgb(100, 133, 221); }  /* white */
+          100% { background-color: #3d9719; }
+        }
+        .reviews-bg-cycle {
+          animation: bgCycle 12s ease-in-out infinite;
+        }
       `}</style>
+      <div className="mx-auto max-w-5xl px-5 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6 text-center md:text-left">
+        <div>
+          <span className="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a373] bg-[#1b4332]/10 px-3 py-1 rounded-full mb-3">
+            Verified Customer Feedback
+          </span>
+          <h2 className="font-sans text-3xl md:text-4xl font-bold text-[#1b4332]">What Our Community Says</h2>
+        </div>
 
-      <div className="mx-auto max-w-5xl px-5 mb-12 text-center">
-        <span className="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a373] bg-[#1b4332]/10 px-3 py-1 rounded-full mb-3">
-          Verified Customer Feedback
-        </span>
-        {/* Changed from font-serif to font-sans */}
-        <h2 className="font-sans text-3xl md:text-4xl font-bold text-[#1b4332]">What Our Community Says</h2>
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to share a review for a Benefit product.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 self-center md:self-auto rounded-full bg-[#1b4332] hover:bg-[#14332a] text-white font-semibold text-sm px-6 py-3 transition-colors whitespace-nowrap"
+        >
+          Share your review
+        </a>
       </div>
 
-      <div className="relative w-full">
-        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#faf9f5] to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#faf9f5] to-transparent z-10" />
-        
-        <div className="flex animate-marquee gap-6 hover:[animation-play-state:paused] cursor-grab active:cursor-grabbing">
+      <div
+        className="relative w-full"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#faf9f5] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#faf9f5] to-transparent z-10 pointer-events-none" />
+
+        {/* Prev / Next arrows */}
+        <button
+          onClick={() => scrollByCard(-1)}
+          aria-label="Previous reviews"
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1b4332] shadow-md hover:bg-[#1b4332] hover:text-white transition-colors"
+        >
+          ‹
+        </button>
+        <button
+          onClick={() => scrollByCard(1)}
+          aria-label="Next reviews"
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1b4332] shadow-md hover:bg-[#1b4332] hover:text-white transition-colors"
+        >
+          ›
+        </button>
+
+        <div
+          ref={trackRef}
+          onPointerDown={pauseThenResume}
+          className="flex gap-6 overflow-x-auto scroll-smooth px-5 md:px-10 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+        >
           {displayReviews.map((review, idx) => {
             const isDark = idx % 2 === 0;
             const uniqueId = `${idx}-${review.author.slice(0, 3)}`;
-            
+
             return (
-              <div 
-                key={uniqueId} 
-                className={`flex flex-col justify-between w-[290px] md:w-[350px] border rounded-2xl p-6 shadow-sm shrink-0 font-sans
+              <div
+                key={uniqueId}
+                className={`review-card flex flex-col justify-between w-[290px] md:w-[350px] border rounded-2xl p-6 shadow-sm shrink-0 font-sans
                   ${isDark ? "bg-[#1b4332] border-white/10" : "bg-white border-gray-100"}`}
               >
                 <div>
-                  {/* Changed from font-serif to font-sans */}
-                  <span className={`text-6xl font-sans leading-none opacity-20 block ${isDark ? 'text-[#d4a373]' : 'text-[#1b4332]'}`}>“</span>
+                  <span className={`text-6xl font-sans leading-none opacity-20 block ${isDark ? "text-[#d4a373]" : "text-[#1b4332]"}`}>“</span>
                   <p className={`text-sm md:text-base italic leading-relaxed ${isDark ? "text-gray-100" : "text-gray-600"}`}>
                     {review.quote}
                   </p>
