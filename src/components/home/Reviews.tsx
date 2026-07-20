@@ -45,7 +45,7 @@ const Stars = ({ rating, uniqueId }: { rating: number; uniqueId: string }) => (
         <svg key={i} width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
           <defs>
             <linearGradient id={gradientId}>
-              <stop offset={`${fill * 100}%`} stopColor="rgb(244, 241, 54)" />
+              <stop offset={`${fill * 100}%`} stopColor="hsl(59, 99%, 58%)" />
               <stop offset={`${fill * 100}%`} stopColor="hsl(220, 55%, 82%)" />
             </linearGradient>
           </defs>
@@ -104,9 +104,9 @@ export default function Reviews() {
     <section id="reviews" className="reviews-bg-cycle py-20 overflow-hidden border-t border-b border-gray-100 relative">
       <style>{`
         @keyframes bgCycle {
-          0%   { background-color: rgb(210, 241, 99); }  /* soft green */
-          33%  { background-color: hsl(240, 63%, 60%); }  /* soft blue */
-          66%  { background-color: rgb(100, 133, 221); }  /* white */
+          0%   { background-color: hsl(87, 93%, 83%); }  /* soft green */
+          33%  { background-color: rgb(206, 206, 235); }  /* soft blue */
+          66%  { background-color: hsl(53, 86%, 84%); }  /* white */
           100% { background-color: #3d9719; }
         }
         .reviews-bg-cycle {
